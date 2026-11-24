@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,7 +44,9 @@ class PortfolioApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Shubham Kumar Rai")))
                 .andExpect(content().string(containsString("FitPulse AI")))
-                .andExpect(content().string(containsString("Brainware University, Kolkata")));
+                .andExpect(content().string(containsString("Brainware University, Kolkata")))
+                .andExpect(content().string(containsString("certLightboxModal")))
+                .andExpect(content().string(not(containsString("Unexpected Error"))));
 
         mockMvc.perform(get("/projects"))
                 .andExpect(status().isOk())
