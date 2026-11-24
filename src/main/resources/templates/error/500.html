@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('500 - Server Error | Shubham Kumar Rai', 'An unexpected server error occurred.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('error')}"></header>
+<main class="section-block" style="min-height: 70vh; display: grid; place-items: center;">
+    <div class="container-custom text-center">
+        <div class="glass-card p-5 mx-auto" style="max-width: 560px;">
+            <div class="section-eyebrow mb-3" th:text="'HTTP ' + (${statusCode} ?: 500)">HTTP 500</div>
+            <h1 class="display-4 fw-bold gradient-text mb-3" th:text="${statusCode} ?: 500">500</h1>
+            <h2 class="h4 fw-bold mb-3" th:text="${errorTitle} ?: 'Internal Server Error'">Internal Server Error</h2>
+            <p class="mb-4" style="color: var(--text-secondary);" th:text="${errorMessage} ?: 'Something went wrong while processing your request.'">
+                Something went wrong while processing your request.
+            </p>
+            <a th:href="@{/}" class="btn-primary-gradient">
+                <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Return Home
+            </a>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

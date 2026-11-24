@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Projects | Shubham Kumar Rai', 'Java, Spring Boot, REST API, and Full-Stack projects built by Shubham Kumar Rai.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('projects')}"></header>
+
+<main class="section-block">
+    <div class="container-custom">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-5">
+            <div class="section-header mb-0">
+                <span class="section-eyebrow">Project Archive</span>
+                <h1 class="section-title">All Software Engineering Projects</h1>
+                <p class="section-subtitle">
+                    Spring Boot backends, REST APIs, Spring Security authentication, and database-driven web applications.
+                </p>
+            </div>
+            <a th:href="@{/}" class="btn-outline-glass btn-sm-pill">
+                <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+                <span>Back Home</span>
+            </a>
+        </div>
+
+        <div class="projects-grid">
+            <article th:each="proj : ${projects}" class="glass-card project-card">
+                <div class="project-thumb-wrap">
+                    <img th:src="${proj.imageUrl} ?: '/images/projects/default-project.svg'"
+                         th:alt="${proj.title}"
+                         loading="lazy"
+                         class="project-thumb"/>
+                    <span th:if="${proj.durationLabel != null}" class="project-duration-badge" th:text="${proj.durationLabel}">2026</span>
+                </div>
+                <div class="project-body">
+                    <h2 class="project-title" th:text="${proj.title}">Project Title</h2>
+                    <p class="project-desc" th:text="${proj.shortDescription}">Description</p>
+                    <div class="tech-badges">
+                        <span th:each="tech : ${projectService.parseTechList(proj.techStack)}"
+                              class="tech-badge"
+                              th:text="${tech}">Tech</span>
+                    </div>
+                    <div class="project-actions">
+                        <a th:if="${proj.githubUrl != null}" th:href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-outline-glass btn-sm-pill">
+                            <i data-lucide="github" style="width:14px;height:14px;"></i> GitHub
+                        </a>
+                        <a th:if="${proj.liveUrl != null}" th:href="${proj.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-gradient btn-sm-pill">
+                            <i data-lucide="external-link" style="width:14px;height:14px;"></i> Live Demo
+                        </a>
+                        <a th:if="${proj.swaggerUrl != null}" th:href="${proj.swaggerUrl}" target="_blank" rel="noopener noreferrer" class="btn-outline-glass btn-sm-pill">
+                            <i data-lucide="file-code-2" style="width:14px;height:14px;"></i> Swagger
+                        </a>
+                        <a th:href="@{/projects/{slug}(slug=${proj.slug})}" class="btn-outline-glass btn-sm-pill ms-auto">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

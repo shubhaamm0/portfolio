@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Admin Dashboard | Shubham Kumar Rai Portfolio', 'Manage projects, certificates, and incoming recruiter messages.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('admin')}"></header>
+
+<main class="section-block">
+    <div class="container-custom">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <span class="section-eyebrow">Admin Control Center</span>
+                <h1 class="section-title mb-1">Portfolio CMS Dashboard</h1>
+                <p class="section-subtitle">Manage projects, uploaded certificates, and contact form submissions.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a th:href="@{/admin/projects/new}" class="btn-primary-gradient btn-sm-pill">
+                    <i data-lucide="plus" style="width:15px;height:15px;"></i> Add Project
+                </a>
+                <a th:href="@{/admin/certificates/new}" class="btn-outline-glass btn-sm-pill">
+                    <i data-lucide="upload" style="width:15px;height:15px;"></i> Add Certificate
+                </a>
+                <form th:action="@{/admin/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn-outline-glass btn-sm-pill">
+                        <i data-lucide="log-out" style="width:15px;height:15px;"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${adminSuccess}" class="alert-banner alert-success-custom mb-4" th:text="${adminSuccess}"></div>
+
+        <!-- Summary Cards -->
+        <div class="row g-3 mb-5">
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3">
+                    <div class="fact-label">Projects</div>
+                    <div class="h3 fw-bold mb-0" th:text="${projectCount}">0</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3">
+                    <div class="fact-label">Certificates</div>
+                    <div class="h3 fw-bold mb-0" th:text="${certificateCount}">0</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3">
+                    <div class="fact-label">Total Messages</div>
+                    <div class="h3 fw-bold mb-0" th:text="${messageCount}">0</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="glass-card p-3">
+                    <div class="fact-label">Unread Messages</div>
+                    <div class="h3 fw-bold mb-0 gradient-text" th:text="${unreadCount}">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Panel -->
+        <section id="projects-panel" class="glass-card p-4 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h2 class="h4 fw-bold mb-0">Projects</h2>
+                <a th:href="@{/admin/projects/new}" class="btn-primary-gradient btn-sm-pill">+ New Project</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0" style="color: var(--text-primary); --bs-table-bg: transparent; --bs-table-border-color: var(--border-subtle);">
+                    <thead>
+                    <tr style="color: var(--text-muted); font-size: 0.82rem; text-transform: uppercase;">
+                        <th>Order</th>
+                        <th>Title</th>
+                        <th>Featured</th>
+                        <th>Links</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="proj : ${projects}">
+                        <td th:text="${proj.displayOrder}">1</td>
+                        <td>
+                            <div class="fw-semibold" th:text="${proj.title}">Title</div>
+                            <small style="color: var(--text-secondary);" th:text="${proj.techStack}">Stack</small>
+                        </td>
+                        <td>
+                            <span class="tech-badge" th:text="${proj.featured} ? 'Featured' : 'Hidden'">Featured</span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a th:if="${proj.githubUrl != null}" th:href="${proj.githubUrl}" target="_blank" class="btn-outline-glass btn-sm-pill">GitHub</a>
+                                <a th:if="${proj.liveUrl != null}" th:href="${proj.liveUrl}" target="_blank" class="btn-outline-glass btn-sm-pill">Live</a>
+                            </div>
+                        </td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-2">
+                                <a th:href="@{/admin/projects/{id}/edit(id=${proj.id})}" class="btn-outline-glass btn-sm-pill">Edit</a>
+                                <form th:action="@{/admin/projects/{id}/delete(id=${proj.id})}" method="post" onsubmit="return confirm('Delete this project?');">
+                                    <button type="submit" class="btn-outline-glass btn-sm-pill" style="color:#fb7185;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Certificates Panel -->
+        <section id="certificates-panel" class="glass-card p-4 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <h2 class="h4 fw-bold mb-0">Certifications</h2>
+                <a th:href="@{/admin/certificates/new}" class="btn-primary-gradient btn-sm-pill">+ Upload Certificate</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0" style="color: var(--text-primary); --bs-table-bg: transparent; --bs-table-border-color: var(--border-subtle);">
+                    <thead>
+                    <tr style="color: var(--text-muted); font-size: 0.82rem; text-transform: uppercase;">
+                        <th>Preview</th>
+                        <th>Title &amp; Issuer</th>
+                        <th>Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cert : ${certificates}">
+                        <td style="width: 96px;">
+                            <img th:src="${cert.imageUrl}" th:alt="${cert.title}" style="width:84px;height:54px;object-fit:cover;border-radius:0.45rem;background:#fff;"/>
+                        </td>
+                        <td>
+                            <div class="fw-semibold" th:text="${cert.title}">Title</div>
+                            <small style="color: var(--text-secondary);" th:text="${cert.issuer}">Issuer</small>
+                        </td>
+                        <td th:text="${cert.issueDate} ?: '—'">Date</td>
+                        <td class="text-end">
+                            <div class="d-inline-flex gap-2">
+                                <a th:href="@{/admin/certificates/{id}/edit(id=${cert.id})}" class="btn-outline-glass btn-sm-pill">Edit</a>
+                                <form th:action="@{/admin/certificates/{id}/delete(id=${cert.id})}" method="post" onsubmit="return confirm('Delete this certificate?');">
+                                    <button type="submit" class="btn-outline-glass btn-sm-pill" style="color:#fb7185;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Messages Panel -->
+        <section id="messages-panel" class="glass-card p-4">
+            <h2 class="h4 fw-bold mb-3">Contact Messages</h2>
+            <div th:if="${#lists.isEmpty(messages)}" style="color: var(--text-secondary);">No contact messages received yet.</div>
+            <div th:unless="${#lists.isEmpty(messages)}" class="d-grid gap-3">
+                <article th:each="msg : ${messages}" class="p-3 rounded-3" style="border: 1px solid var(--border-subtle); background: var(--bg-primary);">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2 mb-2">
+                        <div>
+                            <span class="fw-bold" th:text="${msg.name}">Sender</span>
+                            <span style="color: var(--text-secondary);"> &lt;<span th:text="${msg.email}">email</span>&gt;</span>
+                            <div class="fw-semibold mt-1" th:text="${msg.subject}">Subject</div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="tech-badge" th:text="${msg.status}">UNREAD</span>
+                            <small style="color: var(--text-muted);" th:text="${#temporals.format(msg.createdAt, 'dd MMM yyyy HH:mm')}">Date</small>
+                        </div>
+                    </div>
+                    <p class="mb-3" style="color: var(--text-secondary); white-space: pre-line;" th:text="${msg.message}">Message</p>
+                    <div class="d-flex gap-2">
+                        <form th:if="${msg.status.name() == 'UNREAD'}" th:action="@{/admin/messages/{id}/read(id=${msg.id})}" method="post">
+                            <button type="submit" class="btn-outline-glass btn-sm-pill">Mark as Read</button>
+                        </form>
+                        <form th:action="@{/admin/messages/{id}/delete(id=${msg.id})}" method="post" onsubmit="return confirm('Delete this message?');">
+                            <button type="submit" class="btn-outline-glass btn-sm-pill" style="color:#fb7185;">Delete</button>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

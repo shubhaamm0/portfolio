@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${isEdit} ? 'Edit Project | Admin' : 'New Project | Admin', 'Manage portfolio project entry.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('admin')}"></header>
+
+<main class="section-block">
+    <div class="container-custom" style="max-width: 780px;">
+        <a th:href="@{/admin}" class="btn-outline-glass btn-sm-pill mb-4">
+            <i data-lucide="arrow-left" style="width:15px;height:15px;"></i> Back to Dashboard
+        </a>
+
+        <div class="glass-card p-4 p-md-5">
+            <h1 class="h3 fw-bold mb-4" th:text="${isEdit} ? 'Edit Project' : 'Add New Project'">Project Form</h1>
+
+            <form th:action="${isEdit} ? @{/admin/projects/{id}(id=${projectForm.id})} : @{/admin/projects}"
+                  th:object="${projectForm}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="form-field">
+                            <label for="title" class="form-label-custom">Project Title *</label>
+                            <input id="title" type="text" th:field="*{title}" class="form-input-custom" required/>
+                            <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-field">
+                            <label for="durationLabel" class="form-label-custom">Duration / Date</label>
+                            <input id="durationLabel" type="text" th:field="*{durationLabel}" class="form-input-custom" placeholder="e.g., Nov 2026"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-8">
+                        <div class="form-field">
+                            <label for="slug" class="form-label-custom">URL Slug (optional, auto-generated)</label>
+                            <input id="slug" type="text" th:field="*{slug}" class="form-input-custom" placeholder="my-spring-boot-app"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-field">
+                            <label for="displayOrder" class="form-label-custom">Display Order</label>
+                            <input id="displayOrder" type="number" th:field="*{displayOrder}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="shortDescription" class="form-label-custom">Short Description *</label>
+                    <textarea id="shortDescription" rows="2" th:field="*{shortDescription}" class="form-input-custom" required></textarea>
+                    <div class="field-error" th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"></div>
+                </div>
+
+                <div class="form-field">
+                    <label for="fullDescription" class="form-label-custom">Full Description *</label>
+                    <textarea id="fullDescription" rows="4" th:field="*{fullDescription}" class="form-input-custom" required></textarea>
+                    <div class="field-error" th:if="${#fields.hasErrors('fullDescription')}" th:errors="*{fullDescription}"></div>
+                </div>
+
+                <div class="form-field">
+                    <label for="techStack" class="form-label-custom">Technology Stack (comma-separated) *</label>
+                    <input id="techStack" type="text" th:field="*{techStack}" class="form-input-custom" placeholder="Java 17, Spring Boot, MySQL, Docker" required/>
+                    <div class="field-error" th:if="${#fields.hasErrors('techStack')}" th:errors="*{techStack}"></div>
+                </div>
+
+                <div class="form-field">
+                    <label for="highlights" class="form-label-custom">Key Highlights (one bullet per line)</label>
+                    <textarea id="highlights" rows="4" th:field="*{highlights}" class="form-input-custom"></textarea>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="form-field">
+                            <label for="githubUrl" class="form-label-custom">GitHub URL</label>
+                            <input id="githubUrl" type="url" th:field="*{githubUrl}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-field">
+                            <label for="liveUrl" class="form-label-custom">Live Demo URL</label>
+                            <input id="liveUrl" type="url" th:field="*{liveUrl}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-field">
+                            <label for="swaggerUrl" class="form-label-custom">Swagger / API Docs URL</label>
+                            <input id="swaggerUrl" type="url" th:field="*{swaggerUrl}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="imageFile" class="form-label-custom">Upload Project Image (PNG/JPG/WEBP)</label>
+                            <input id="imageFile" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" class="form-input-custom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="imageUrl" class="form-label-custom">Or Existing Image Path / URL</label>
+                            <input id="imageUrl" type="text" th:field="*{imageUrl}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input id="featured" type="checkbox" th:field="*{featured}" class="form-check-input"/>
+                    <label for="featured" class="form-check-label">Show on Homepage Featured Projects</label>
+                </div>
+
+                <button type="submit" class="btn-primary-gradient">
+                    <i data-lucide="save" style="width:16px;height:16px;"></i>
+                    <span th:text="${isEdit} ? 'Update Project' : 'Create Project'">Save Project</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

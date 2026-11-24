@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${isEdit} ? 'Edit Certificate | Admin' : 'Add Certificate | Admin', 'Upload or update portfolio certificate.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('admin')}"></header>
+
+<main class="section-block">
+    <div class="container-custom" style="max-width: 720px;">
+        <a th:href="@{/admin}" class="btn-outline-glass btn-sm-pill mb-4">
+            <i data-lucide="arrow-left" style="width:15px;height:15px;"></i> Back to Dashboard
+        </a>
+
+        <div class="glass-card p-4 p-md-5">
+            <h1 class="h3 fw-bold mb-4" th:text="${isEdit} ? 'Edit Certificate' : 'Upload New Certificate'">Certificate Form</h1>
+
+            <form th:action="${isEdit} ? @{/admin/certificates/{id}(id=${certificateForm.id})} : @{/admin/certificates}"
+                  th:object="${certificateForm}"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                <div class="form-field">
+                    <label for="certTitle" class="form-label-custom">Certificate Name *</label>
+                    <input id="certTitle" type="text" th:field="*{title}" class="form-input-custom" required/>
+                    <div class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="issuer" class="form-label-custom">Issuing Organization *</label>
+                            <input id="issuer" type="text" th:field="*{issuer}" class="form-input-custom" required/>
+                            <div class="field-error" th:if="${#fields.hasErrors('issuer')}" th:errors="*{issuer}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="issueDate" class="form-label-custom">Completion Date</label>
+                            <input id="issueDate" type="text" th:field="*{issueDate}" class="form-input-custom" placeholder="e.g., March 30, 2026"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="credentialId" class="form-label-custom">Credential ID</label>
+                            <input id="credentialId" type="text" th:field="*{credentialId}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="credentialUrl" class="form-label-custom">Verification URL</label>
+                            <input id="credentialUrl" type="url" th:field="*{credentialUrl}" class="form-input-custom"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="description" class="form-label-custom">Description</label>
+                    <textarea id="description" rows="3" th:field="*{description}" class="form-input-custom"></textarea>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="imageFile" class="form-label-custom">Upload Certificate Image (PNG/JPG/WEBP)</label>
+                            <input id="imageFile" name="imageFile" type="file" accept="image/png,image/jpeg,image/webp" class="form-input-custom"/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-field">
+                            <label for="imageUrl" class="form-label-custom">Or Image Path / URL</label>
+                            <input id="imageUrl" type="text" th:field="*{imageUrl}" class="form-input-custom"/>
+                            <div class="field-error" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="displayOrder" class="form-label-custom">Display Order</label>
+                    <input id="displayOrder" type="number" th:field="*{displayOrder}" class="form-input-custom" style="max-width:140px;"/>
+                </div>
+
+                <button type="submit" class="btn-primary-gradient">
+                    <i data-lucide="save" style="width:16px;height:16px;"></i>
+                    <span th:text="${isEdit} ? 'Update Certificate' : 'Save Certificate'">Save Certificate</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

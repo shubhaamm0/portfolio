@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="site-footer">
+    <div class="container-custom footer-inner">
+        <div>
+            <strong style="color: var(--text-primary);">Shubham Kumar Rai</strong>
+            <span> • Java Backend &amp; Spring Boot Developer • Kolkata, India</span>
+        </div>
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+            <a href="https://github.com/shubhaamm0" target="_blank" rel="noopener noreferrer" class="d-inline-flex align-items-center gap-1">
+                <i data-lucide="github" style="width:16px;height:16px;"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/shubham-kumar-rai-1043a1252" target="_blank" rel="noopener noreferrer" class="d-inline-flex align-items-center gap-1">
+                <i data-lucide="linkedin" style="width:16px;height:16px;"></i> LinkedIn
+            </a>
+            <a th:href="@{/admin}" style="color: var(--text-muted); font-size: 0.85rem;">Admin</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

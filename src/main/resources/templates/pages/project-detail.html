@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${project.title} + ' | Shubham Kumar Rai', ${project.shortDescription})}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('projects')}"></header>
+
+<main class="section-block">
+    <div class="container-custom" style="max-width: 960px;">
+        <a th:href="@{/projects}" class="btn-outline-glass btn-sm-pill mb-4">
+            <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+            <span>Back to Projects</span>
+        </a>
+
+        <article class="glass-card overflow-hidden">
+            <div style="aspect-ratio: 16 / 8; background: #090d16; border-bottom: 1px solid var(--border-subtle);">
+                <img th:src="${project.imageUrl} ?: '/images/projects/default-project.svg'"
+                     th:alt="${project.title}"
+                     style="width:100%;height:100%;object-fit:cover;"/>
+            </div>
+
+            <div class="p-4 p-md-5">
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                    <span class="section-eyebrow mb-0">Case Study</span>
+                    <span th:if="${project.durationLabel != null}" class="skill-pill" th:text="${project.durationLabel}">Duration</span>
+                </div>
+
+                <h1 class="section-title mb-3" th:text="${project.title}">Project Title</h1>
+                <p class="lead mb-4" style="color: var(--text-secondary);" th:text="${project.fullDescription}">Full description</p>
+
+                <div class="mb-4">
+                    <h2 class="h6 text-uppercase fw-bold mb-3" style="letter-spacing:0.06em;color:var(--text-muted);">Technology Stack</h2>
+                    <div class="tech-badges">
+                        <span th:each="tech : ${techList}" class="tech-badge" th:text="${tech}">Java</span>
+                    </div>
+                </div>
+
+                <div th:if="${!#lists.isEmpty(highlights)}" class="mb-4">
+                    <h2 class="h6 text-uppercase fw-bold mb-3" style="letter-spacing:0.06em;color:var(--text-muted);">Architecture &amp; Implementation Highlights</h2>
+                    <ul class="list-unstyled d-grid gap-2">
+                        <li th:each="line : ${highlights}" class="d-flex align-items-start gap-2" style="color:var(--text-secondary);">
+                            <i data-lucide="check-circle-2" style="width:18px;height:18px;color:#34d399;flex-shrink:0;margin-top:3px;"></i>
+                            <span th:text="${line}">Highlight</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 pt-3" style="border-top:1px solid var(--border-subtle);">
+                    <a th:if="${project.liveUrl != null}" th:href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-gradient">
+                        <i data-lucide="external-link" style="width:16px;height:16px;"></i>
+                        <span>Open Live Demo</span>
+                    </a>
+                    <a th:if="${project.swaggerUrl != null}" th:href="${project.swaggerUrl}" target="_blank" rel="noopener noreferrer" class="btn-outline-glass">
+                        <i data-lucide="file-code-2" style="width:16px;height:16px;"></i>
+                        <span>Open Swagger UI</span>
+                    </a>
+                    <a th:if="${project.githubUrl != null}" th:href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="btn-outline-glass">
+                        <i data-lucide="github" style="width:16px;height:16px;"></i>
+                        <span>View Source on GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

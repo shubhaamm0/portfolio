@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('404 - Page Not Found | Shubham Kumar Rai', 'The requested page could not be found.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('error')}"></header>
+<main class="section-block" style="min-height: 70vh; display: grid; place-items: center;">
+    <div class="container-custom text-center">
+        <div class="glass-card p-5 mx-auto" style="max-width: 560px;">
+            <div class="section-eyebrow mb-3">HTTP 404</div>
+            <h1 class="display-4 fw-bold gradient-text mb-3">404</h1>
+            <h2 class="h4 fw-bold mb-3" th:text="${errorTitle} ?: 'Page Not Found'">Page Not Found</h2>
+            <p class="mb-4" style="color: var(--text-secondary);" th:text="${errorMessage} ?: 'The page you are looking for might have been removed or is temporarily unavailable.'">
+                The page you are looking for might have been removed or is temporarily unavailable.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a th:href="@{/}" class="btn-primary-gradient">
+                    <i data-lucide="home" style="width:16px;height:16px;"></i> Back to Home
+                </a>
+                <a th:href="@{/projects}" class="btn-outline-glass">View Projects</a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

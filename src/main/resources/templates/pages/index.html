@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Shubham Kumar Rai | Java Backend & Spring Boot Developer', 'Portfolio of Shubham Kumar Rai - Java 17, Spring Boot, REST APIs, Spring Security, Hibernate, Spring Data JPA, and MySQL developer.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('home')}"></header>
+
+<main>
+    <!-- A. HERO SECTION -->
+    <section class="hero-section">
+        <div class="hero-grid-bg" aria-hidden="true"></div>
+        <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+
+        <div class="container-custom hero-grid">
+            <div class="hero-content">
+                <div class="hero-status-pill">
+                    <span class="pulse-dot" aria-hidden="true"></span>
+                    <span>Open to Java Backend Internships &amp; SDE Roles</span>
+                </div>
+
+                <h1 class="hero-title">
+                    Hi, I'm <span class="gradient-text" th:text="${profile.fullName}">Shubham Kumar Rai</span>
+                </h1>
+                <p class="hero-role" th:text="${profile.headline}">
+                    Java Backend Developer | Spring Boot Developer
+                </p>
+                <p class="hero-summary" th:text="${profile.heroSummary}">
+                    B.Tech Computer Science student and entry-level Java Developer building Spring Boot applications and RESTful APIs.
+                </p>
+
+                <div class="hero-cta-group">
+                    <a th:href="@{/resume/download}" class="btn-primary-gradient">
+                        <i data-lucide="file-down" style="width:18px;height:18px;"></i>
+                        <span>Download Resume</span>
+                    </a>
+                    <a href="#projects" class="btn-outline-glass">
+                        <i data-lucide="layers" style="width:18px;height:18px;"></i>
+                        <span>View Projects</span>
+                    </a>
+                    <a href="#contact" class="btn-outline-glass">
+                        <i data-lucide="mail" style="width:18px;height:18px;"></i>
+                        <span>Contact Me</span>
+                    </a>
+                </div>
+
+                <div class="hero-socials">
+                    <a th:href="${profile.githubUrl}" target="_blank" rel="noopener noreferrer" class="social-pill" aria-label="GitHub Profile">
+                        <i data-lucide="github" style="width:17px;height:17px;"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a th:href="${profile.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="social-pill" aria-label="LinkedIn Profile">
+                        <i data-lucide="linkedin" style="width:17px;height:17px;"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    <span class="social-pill">
+                        <i data-lucide="map-pin" style="width:16px;height:16px;"></i>
+                        <span th:text="${profile.location}">Kolkata, India</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="profile-frame">
+                    <img th:src="@{${profile.profileImageUrl}}"
+                         src="/images/profile/shubham-rai.jpg"
+                         alt="Shubham Kumar Rai - Java Backend Developer"
+                         class="profile-photo"/>
+                </div>
+                <div class="code-snippet-card" aria-label="Backend Stack Preview">
+                    <div class="code-snippet-dots" aria-hidden="true">
+                        <span style="background:#f43f5e;"></span>
+                        <span style="background:#f59e0b;"></span>
+                        <span style="background:#10b981;"></span>
+                    </div>
+                    <div><span class="code-kw">@RestController</span></div>
+                    <div><span class="code-kw">public class</span> <span class="code-fn">DeveloperProfile</span> {</div>
+                    <div>&nbsp;&nbsp;String stack = <span class="code-str">"Java 17 • Spring Boot • MySQL"</span>;</div>
+                    <div>&nbsp;&nbsp;String focus = <span class="code-str">"Scalable REST APIs &amp; Security"</span>;</div>
+                    <div>}</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B. ABOUT ME -->
+    <section id="about" class="section-block section-alt">
+        <div class="container-custom">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">About Me</span>
+                <h2 class="section-title">Engineering clean, scalable Java backends</h2>
+                <p class="section-subtitle">
+                    Computer Science undergraduate focused on Spring Boot architecture, relational persistence, and production-ready APIs.
+                </p>
+            </div>
+
+            <div class="about-grid">
+                <div class="glass-card p-4 p-md-5 about-body reveal">
+                    <p th:each="para : ${profile.aboutParagraphs}" th:text="${para}"></p>
+                </div>
+
+                <div class="about-facts reveal">
+                    <div class="glass-card fact-card">
+                        <div class="fact-label">Degree</div>
+                        <div class="fact-value">B.Tech in Computer Science &amp; Engineering</div>
+                        <div style="color: var(--text-secondary); font-size: 0.88rem;">Brainware University, Kolkata (Expected 2027)</div>
+                    </div>
+                    <div class="glass-card fact-card">
+                        <div class="fact-label">Core Focus</div>
+                        <div class="fact-value">Java 17 &amp; Spring Boot Ecosystem</div>
+                        <div style="color: var(--text-secondary); font-size: 0.88rem;">Spring MVC, Security/JWT, JPA, Hibernate, REST</div>
+                    </div>
+                    <div class="glass-card fact-card">
+                        <div class="fact-label">Databases &amp; DevOps</div>
+                        <div class="fact-value">MySQL, PostgreSQL &amp; Docker</div>
+                        <div style="color: var(--text-secondary); font-size: 0.88rem;">Layered MVC, Swagger/OpenAPI, Render Cloud</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- C. TECHNICAL SKILLS -->
+    <section id="skills" class="section-block">
+        <div class="container-custom">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">Technical Stack</span>
+                <h2 class="section-title">Confirmed skills &amp; backend technologies</h2>
+                <p class="section-subtitle">
+                    Tools, frameworks, and concepts applied across my academic coursework, simulations, and deployed projects.
+                </p>
+            </div>
+
+            <div class="skills-grid">
+                <article th:each="cat : ${profile.skillCategories}" class="glass-card skill-card reveal">
+                    <div class="skill-card-head">
+                        <div class="skill-icon-box">
+                            <i th:attr="data-lucide=${cat.icon}" style="width:20px;height:20px;"></i>
+                        </div>
+                        <h3 class="skill-card-title" th:text="${cat.title}">Category</h3>
+                    </div>
+                    <div class="skill-pill-wrap">
+                        <span th:each="item : ${cat.items}" class="skill-pill" th:text="${item}">Skill</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="glass-card p-4 mt-4 reveal">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i data-lucide="cpu" style="width:18px;height:18px;color:#818cf8;"></i>
+                        <strong>Core Engineering Concepts:</strong>
+                    </div>
+                    <div class="skill-pill-wrap">
+                        <span th:each="concept : ${profile.coreConcepts}" class="skill-pill" th:text="${concept}">OOP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- D. FEATURED PROJECTS -->
+    <section id="projects" class="section-block section-alt">
+        <div class="container-custom">
+            <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-5 reveal">
+                <div class="section-header mb-0">
+                    <span class="section-eyebrow">Featured Work</span>
+                    <h2 class="section-title">Backend &amp; Full-Stack Projects</h2>
+                    <p class="section-subtitle">
+                        Real-world Spring Boot applications showcasing REST API design, JWT security, AI integration, and relational modeling.
+                    </p>
+                </div>
+                <a th:href="@{/projects}" class="btn-outline-glass btn-sm-pill">
+                    <span>All Projects</span>
+                    <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                </a>
+            </div>
+
+            <div class="projects-grid">
+                <article th:each="proj : ${projects}" class="glass-card project-card reveal">
+                    <div class="project-thumb-wrap">
+                        <img th:src="${proj.imageUrl} ?: '/images/projects/default-project.svg'"
+                             th:alt="${proj.title}"
+                             loading="lazy"
+                             class="project-thumb"/>
+                        <span th:if="${proj.durationLabel != null}" class="project-duration-badge" th:text="${proj.durationLabel}">2026</span>
+                    </div>
+
+                    <div class="project-body">
+                        <h3 class="project-title" th:text="${proj.title}">Project Title</h3>
+                        <p class="project-desc" th:text="${proj.shortDescription}">Short description</p>
+
+                        <div class="tech-badges">
+                            <span th:each="tech, iter : ${projectService.parseTechList(proj.techStack)}"
+                                  th:if="${iter.index < 6}"
+                                  class="tech-badge"
+                                  th:text="${tech}">Java</span>
+                        </div>
+
+                        <div class="project-actions">
+                            <a th:if="${proj.githubUrl != null}"
+                               th:href="${proj.githubUrl}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn-outline-glass btn-sm-pill">
+                                <i data-lucide="github" style="width:14px;height:14px;"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a th:if="${proj.liveUrl != null}"
+                               th:href="${proj.liveUrl}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn-primary-gradient btn-sm-pill">
+                                <i data-lucide="external-link" style="width:14px;height:14px;"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a th:if="${proj.swaggerUrl != null}"
+                               th:href="${proj.swaggerUrl}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn-outline-glass btn-sm-pill">
+                                <i data-lucide="file-code-2" style="width:14px;height:14px;"></i>
+                                <span>Swagger</span>
+                            </a>
+                            <a th:href="@{/projects/{slug}(slug=${proj.slug})}" class="btn-outline-glass btn-sm-pill ms-auto">
+                                <span>View Details</span>
+                                <i data-lucide="chevron-right" style="width:14px;height:14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- E. EDUCATION -->
+    <section id="education" class="section-block">
+        <div class="container-custom">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">Academic Background</span>
+                <h2 class="section-title">Education Timeline</h2>
+                <p class="section-subtitle">
+                    Formal Computer Science foundation and academic qualifications.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <article th:each="edu : ${profile.educationTimeline}" class="glass-card timeline-item reveal">
+                    <span class="timeline-dot" aria-hidden="true"></span>
+                    <div class="timeline-top">
+                        <div>
+                            <h3 class="h5 fw-bold mb-1" th:text="${edu.institution}">University</h3>
+                            <div class="fw-semibold" style="color: var(--text-primary);" th:text="${edu.degree} + ' — ' + ${edu.branch}">Degree</div>
+                        </div>
+                        <span class="timeline-date" th:text="${edu.duration}">Expected 2027</span>
+                    </div>
+                    <div class="mt-2 d-flex flex-wrap gap-3" style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <i data-lucide="award" style="width:15px;height:15px;color:#818cf8;"></i>
+                            <span th:text="${edu.score}">Score</span>
+                        </span>
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <i data-lucide="map-pin" style="width:15px;height:15px;"></i>
+                            <span th:text="${edu.location}">Location</span>
+                        </span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- F. CERTIFICATIONS & TRAINING -->
+    <section id="certifications" class="section-block section-alt">
+        <div class="container-custom">
+            <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-5 reveal">
+                <div class="section-header mb-0">
+                    <span class="section-eyebrow">Verified Credentials</span>
+                    <h2 class="section-title">Certifications &amp; Practical Training</h2>
+                    <p class="section-subtitle">
+                        Authentic completion certificates and software engineering simulation credentials. Click any certificate to inspect the original document.
+                    </p>
+                </div>
+                <a th:href="@{/certificates}" class="btn-outline-glass btn-sm-pill">
+                    <span>Full Gallery</span>
+                    <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                </a>
+            </div>
+
+            <div class="certs-grid">
+                <article th:each="cert : ${certificates}" class="glass-card cert-card reveal">
+                    <div class="cert-preview-wrap"
+                         data-cert-trigger="true"
+                         th:attr="data-cert-title=${cert.title},
+                                  data-cert-issuer=${cert.issuer} + (${cert.issueDate != null} ? ' • ' + ${cert.issueDate} : ''),
+                                  data-cert-image=${cert.imageUrl},
+                                  data-cert-pdf=${cert.pdfUrl},
+                                  data-cert-detail=@{/certificates/{id}(id=${cert.id})}">
+                        <img th:src="${cert.imageUrl}"
+                             th:alt="${cert.title}"
+                             loading="lazy"
+                             class="cert-preview-img"/>
+                    </div>
+                    <div class="cert-body">
+                        <div class="cert-issuer" th:text="${cert.issuer}">Issuer</div>
+                        <h3 class="cert-title" th:text="${cert.title}">Certificate Title</h3>
+                        <p class="cert-meta">
+                            <span th:if="${cert.issueDate != null}" th:text="'Issued: ' + ${cert.issueDate}">Date</span>
+                            <span th:if="${cert.credentialId != null}" th:text="' • ID: ' + ${cert.credentialId}">ID</span>
+                        </p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="button"
+                                    class="btn-primary-gradient btn-sm-pill"
+                                    data-cert-trigger="true"
+                                    th:attr="data-cert-title=${cert.title},
+                                             data-cert-issuer=${cert.issuer} + (${cert.issueDate != null} ? ' • ' + ${cert.issueDate} : ''),
+                                             data-cert-image=${cert.imageUrl},
+                                             data-cert-pdf=${cert.pdfUrl},
+                                             data-cert-detail=@{/certificates/{id}(id=${cert.id})}">
+                                <i data-lucide="eye" style="width:14px;height:14px;"></i>
+                                <span>View Certificate</span>
+                            </button>
+                            <a th:href="@{/certificates/{id}(id=${cert.id})}" class="btn-outline-glass btn-sm-pill">
+                                <span>Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- G. PROFILES & SIMULATION HIGHLIGHTS -->
+    <section id="profiles" class="section-block">
+        <div class="container-custom">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">Developer Profiles</span>
+                <h2 class="section-title">Connect &amp; Inspect My Code</h2>
+                <p class="section-subtitle">
+                    Verified GitHub repositories, LinkedIn profile, and industry job simulation completion.
+                </p>
+            </div>
+
+            <div class="profiles-grid">
+                <a th:each="link : ${profile.verifiedProfiles}"
+                   th:href="${link.url}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="glass-card profile-link-card reveal">
+                    <div class="skill-icon-box flex-shrink-0">
+                        <i th:attr="data-lucide=${link.icon}" style="width:20px;height:20px;"></i>
+                    </div>
+                    <div>
+                        <div class="d-flex align-items-center gap-2">
+                            <h3 class="h5 fw-bold mb-1" th:text="${link.label}">GitHub</h3>
+                            <i data-lucide="arrow-up-right" style="width:15px;height:15px;color:var(--text-muted);"></i>
+                        </div>
+                        <div class="mb-1" style="font-family:var(--font-mono);font-size:0.84rem;color:var(--accent-cyan);" th:text="${link.handle}">handle</div>
+                        <p class="mb-0" style="color:var(--text-secondary);font-size:0.9rem;" th:text="${link.description}">Description</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- H. CONTACT SECTION -->
+    <section id="contact" class="section-block section-alt">
+        <div class="container-custom">
+            <div class="section-header reveal">
+                <span class="section-eyebrow">Get In Touch</span>
+                <h2 class="section-title">Contact Me</h2>
+                <p class="section-subtitle">
+                    Have an internship opportunity, Java backend role, or collaboration idea? Send a message directly into my portfolio inbox.
+                </p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info-list reveal">
+                    <a th:href="'mailto:' + ${profile.email}" class="glass-card contact-item-card">
+                        <div class="skill-icon-box flex-shrink-0">
+                            <i data-lucide="mail" style="width:18px;height:18px;"></i>
+                        </div>
+                        <div>
+                            <div class="fact-label mb-0">Email</div>
+                            <div class="fw-semibold" th:text="${profile.email}">raishubhamkumar461@gmail.com</div>
+                        </div>
+                    </a>
+                    <a th:href="${profile.linkedinUrl}" target="_blank" rel="noopener noreferrer" class="glass-card contact-item-card">
+                        <div class="skill-icon-box flex-shrink-0">
+                            <i data-lucide="linkedin" style="width:18px;height:18px;"></i>
+                        </div>
+                        <div>
+                            <div class="fact-label mb-0">LinkedIn</div>
+                            <div class="fw-semibold" th:text="${profile.linkedinHandle}">linkedin.com/in/shubham-kumar-rai-1043a1252</div>
+                        </div>
+                    </a>
+                    <a th:href="${profile.githubUrl}" target="_blank" rel="noopener noreferrer" class="glass-card contact-item-card">
+                        <div class="skill-icon-box flex-shrink-0">
+                            <i data-lucide="github" style="width:18px;height:18px;"></i>
+                        </div>
+                        <div>
+                            <div class="fact-label mb-0">GitHub</div>
+                            <div class="fw-semibold" th:text="${profile.githubHandle}">github.com/shubhaamm0</div>
+                        </div>
+                    </a>
+                    <div class="glass-card contact-item-card">
+                        <div class="skill-icon-box flex-shrink-0">
+                            <i data-lucide="map-pin" style="width:18px;height:18px;"></i>
+                        </div>
+                        <div>
+                            <div class="fact-label mb-0">Location</div>
+                            <div class="fw-semibold" th:text="${profile.location}">Kolkata, India</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card contact-form-card reveal">
+                    <div th:if="${contactSuccess}" class="alert-banner alert-success-custom" th:text="${contactSuccess}"></div>
+                    <div th:if="${contactError}" class="alert-banner alert-error-custom" th:text="${contactError}"></div>
+                    <div id="contactAjaxStatus"></div>
+
+                    <form id="portfolioContactForm" th:action="@{/contact}" th:object="${contactForm}" method="post" novalidate>
+                        <div class="form-field">
+                            <label for="contactName" class="form-label-custom">Your Name</label>
+                            <input id="contactName" type="text" th:field="*{name}" class="form-input-custom" placeholder="e.g., Priya Sharma" required/>
+                            <div id="error-name" class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            <div id="error-name" class="field-error" th:unless="${#fields.hasErrors('name')}"></div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="contactEmail" class="form-label-custom">Email Address</label>
+                            <input id="contactEmail" type="email" th:field="*{email}" class="form-input-custom" placeholder="recruiter@company.com" required/>
+                            <div id="error-email" class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                            <div id="error-email" class="field-error" th:unless="${#fields.hasErrors('email')}"></div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="contactSubject" class="form-label-custom">Subject</label>
+                            <input id="contactSubject" type="text" th:field="*{subject}" class="form-input-custom" placeholder="Java Backend Internship / Opportunity" required/>
+                            <div id="error-subject" class="field-error" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></div>
+                            <div id="error-subject" class="field-error" th:unless="${#fields.hasErrors('subject')}"></div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="contactMessage" class="form-label-custom">Message</label>
+                            <textarea id="contactMessage" rows="4" th:field="*{message}" class="form-input-custom" placeholder="Write your message here..." required></textarea>
+                            <div id="error-message" class="field-error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></div>
+                            <div id="error-message" class="field-error" th:unless="${#fields.hasErrors('message')}"></div>
+                        </div>
+
+                        <button id="contactSubmitBtn" type="submit" class="btn-primary-gradient w-100">
+                            <i data-lucide="send" style="width:16px;height:16px;"></i>
+                            <span>Send Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Certificate Lightbox Modal -->
+<div id="certLightboxModal" class="lightbox-modal" role="dialog" aria-modal="true" aria-labelledby="lightboxCertTitle">
+    <div class="lightbox-dialog">
+        <div class="lightbox-header">
+            <div>
+                <h3 id="lightboxCertTitle" class="h5 fw-bold mb-0">Certificate</h3>
+                <div id="lightboxCertIssuer" style="font-size:0.85rem;color:var(--text-secondary);"></div>
+            </div>
+            <button id="lightboxCloseBtn" type="button" class="icon-btn" aria-label="Close certificate preview">
+                <i data-lucide="x" style="width:18px;height:18px;"></i>
+            </button>
+        </div>
+        <div class="lightbox-body">
+            <img id="lightboxCertImage" src="" alt="Certificate Preview"/>
+        </div>
+        <div class="lightbox-footer">
+            <a id="lightboxCertDetailLink" href="#" class="btn-outline-glass btn-sm-pill">Open Dedicated Page</a>
+            <a id="lightboxCertPdfLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary-gradient btn-sm-pill">
+                <i data-lucide="file-text" style="width:14px;height:14px;"></i>
+                <span>Open Original PDF</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

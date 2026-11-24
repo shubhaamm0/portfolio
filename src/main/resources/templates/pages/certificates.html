@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Certifications | Shubham Kumar Rai', 'Verified certificates and software engineering job simulation credentials of Shubham Kumar Rai.')}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('certificates')}"></header>
+
+<main class="section-block">
+    <div class="container-custom">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-5">
+            <div class="section-header mb-0">
+                <span class="section-eyebrow">Certifications &amp; Training</span>
+                <h1 class="section-title">Certificate Gallery</h1>
+                <p class="section-subtitle">
+                    Original verified certificates and training completions. Click any certificate to inspect it in full resolution.
+                </p>
+            </div>
+            <a th:href="@{/}" class="btn-outline-glass btn-sm-pill">
+                <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+                <span>Back Home</span>
+            </a>
+        </div>
+
+        <div class="certs-grid">
+            <article th:each="cert : ${certificates}" class="glass-card cert-card">
+                <div class="cert-preview-wrap"
+                     data-cert-trigger="true"
+                     th:attr="data-cert-title=${cert.title},
+                              data-cert-issuer=${cert.issuer} + (${cert.issueDate != null} ? ' • ' + ${cert.issueDate} : ''),
+                              data-cert-image=${cert.imageUrl},
+                              data-cert-pdf=${cert.pdfUrl},
+                              data-cert-detail=@{/certificates/{id}(id=${cert.id})}">
+                    <img th:src="${cert.imageUrl}" th:alt="${cert.title}" loading="lazy" class="cert-preview-img"/>
+                </div>
+                <div class="cert-body">
+                    <div class="cert-issuer" th:text="${cert.issuer}">Issuer</div>
+                    <h2 class="cert-title" th:text="${cert.title}">Title</h2>
+                    <p class="cert-meta" th:text="${cert.description}">Description</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button type="button"
+                                class="btn-primary-gradient btn-sm-pill"
+                                data-cert-trigger="true"
+                                th:attr="data-cert-title=${cert.title},
+                                         data-cert-issuer=${cert.issuer} + (${cert.issueDate != null} ? ' • ' + ${cert.issueDate} : ''),
+                                         data-cert-image=${cert.imageUrl},
+                                         data-cert-pdf=${cert.pdfUrl},
+                                         data-cert-detail=@{/certificates/{id}(id=${cert.id})}">
+                            <i data-lucide="eye" style="width:14px;height:14px;"></i> View Certificate
+                        </button>
+                        <a th:href="@{/certificates/{id}(id=${cert.id})}" class="btn-outline-glass btn-sm-pill">Details</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</main>
+
+<!-- Certificate Lightbox Modal -->
+<div id="certLightboxModal" class="lightbox-modal" role="dialog" aria-modal="true" aria-labelledby="lightboxCertTitle">
+    <div class="lightbox-dialog">
+        <div class="lightbox-header">
+            <div>
+                <h3 id="lightboxCertTitle" class="h5 fw-bold mb-0">Certificate</h3>
+                <div id="lightboxCertIssuer" style="font-size:0.85rem;color:var(--text-secondary);"></div>
+            </div>
+            <button id="lightboxCloseBtn" type="button" class="icon-btn" aria-label="Close certificate preview">
+                <i data-lucide="x" style="width:18px;height:18px;"></i>
+            </button>
+        </div>
+        <div class="lightbox-body">
+            <img id="lightboxCertImage" src="" alt="Certificate Preview"/>
+        </div>
+        <div class="lightbox-footer">
+            <a id="lightboxCertDetailLink" href="#" class="btn-outline-glass btn-sm-pill">Open Dedicated Page</a>
+            <a id="lightboxCertPdfLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary-gradient btn-sm-pill">
+                <i data-lucide="file-text" style="width:14px;height:14px;"></i> Open Original PDF
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>

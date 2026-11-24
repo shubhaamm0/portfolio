@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header th:fragment="navbar(activePage)" class="site-navbar">
+    <div id="pageProgressBar" class="page-progress-bar" aria-hidden="true"></div>
+    <div class="container-custom nav-inner">
+        <a th:href="@{/}" class="brand-logo" aria-label="Shubham Kumar Rai Home">
+            <span class="brand-mark">SR</span>
+            <span>Shubham<span class="gradient-text">.dev</span></span>
+        </a>
+
+        <nav aria-label="Primary Navigation">
+            <ul class="nav-links">
+                <li><a th:href="@{/#about}" class="nav-link-item">About</a></li>
+                <li><a th:href="@{/#skills}" class="nav-link-item">Skills</a></li>
+                <li><a th:href="@{/projects}" th:classappend="${activePage == 'projects'} ? ' active' : ''" class="nav-link-item">Projects</a></li>
+                <li><a th:href="@{/#education}" class="nav-link-item">Education</a></li>
+                <li><a th:href="@{/certificates}" th:classappend="${activePage == 'certificates'} ? ' active' : ''" class="nav-link-item">Certifications</a></li>
+                <li><a th:href="@{/#contact}" class="nav-link-item">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <button id="themeToggleBtn" type="button" class="icon-btn" aria-label="Toggle light or dark theme" title="Toggle theme">
+                <i data-lucide="sun" data-theme-icon="sun" style="width:18px;height:18px;"></i>
+                <i data-lucide="moon" data-theme-icon="moon" style="width:18px;height:18px;display:none;"></i>
+            </button>
+            <a th:href="@{/resume/download}" class="btn-primary-gradient btn-sm-pill d-none d-sm-inline-flex">
+                <i data-lucide="download" style="width:15px;height:15px;"></i>
+                <span>Resume</span>
+            </a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="btn-outline-glass btn-sm-pill d-none d-md-inline-flex">
+                <i data-lucide="shield-check" style="width:15px;height:15px;"></i>
+                <span>Admin</span>
+            </a>
+            <button id="mobileMenuBtn" type="button" class="icon-btn mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false">
+                <i data-lucide="menu" style="width:20px;height:20px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="mobileDrawer" class="mobile-drawer">
+        <div class="container-custom mobile-drawer-links">
+            <a th:href="@{/#about}" class="nav-link-item">About</a>
+            <a th:href="@{/#skills}" class="nav-link-item">Skills</a>
+            <a th:href="@{/projects}" class="nav-link-item">Projects</a>
+            <a th:href="@{/#education}" class="nav-link-item">Education</a>
+            <a th:href="@{/certificates}" class="nav-link-item">Certifications</a>
+            <a th:href="@{/#contact}" class="nav-link-item">Contact</a>
+            <a th:href="@{/resume/download}" class="nav-link-item">Download Resume (PDF)</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" class="nav-link-item">Admin Dashboard</a>
+        </div>
+    </div>
+</header>
+</body>
+</html>

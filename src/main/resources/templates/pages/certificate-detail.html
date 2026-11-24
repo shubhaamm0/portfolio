@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head(${certificate.title} + ' | Certificate', ${certificate.issuer})}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar('certificates')}"></header>
+
+<main class="section-block">
+    <div class="container-custom" style="max-width: 960px;">
+        <a th:href="@{/certificates}" class="btn-outline-glass btn-sm-pill mb-4">
+            <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+            <span>Back to Certificates</span>
+        </a>
+
+        <article class="glass-card overflow-hidden">
+            <div class="p-3 p-md-4" style="background:#020617;border-bottom:1px solid var(--border-subtle);">
+                <img th:src="${certificate.imageUrl}"
+                     th:alt="${certificate.title}"
+                     style="max-height:620px;width:auto;margin-inline:auto;border-radius:0.5rem;"/>
+            </div>
+            <div class="p-4 p-md-5">
+                <div class="cert-issuer mb-2" th:text="${certificate.issuer}">Issuer</div>
+                <h1 class="section-title mb-3" th:text="${certificate.title}">Certificate Title</h1>
+                <p th:if="${certificate.description != null}" class="mb-4" style="color:var(--text-secondary);" th:text="${certificate.description}">Description</p>
+
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <span th:if="${certificate.issueDate != null}" class="skill-pill" th:text="'Issued: ' + ${certificate.issueDate}">Date</span>
+                    <span th:if="${certificate.credentialId != null}" class="skill-pill" th:text="'Credential ID: ' + ${certificate.credentialId}">Credential ID</span>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3">
+                    <a th:if="${certificate.pdfUrl != null}" th:href="${certificate.pdfUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary-gradient">
+                        <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                        <span>View Original PDF</span>
+                    </a>
+                    <a th:if="${certificate.credentialUrl != null}" th:href="${certificate.credentialUrl}" target="_blank" rel="noopener noreferrer" class="btn-outline-glass">
+                        <i data-lucide="external-link" style="width:16px;height:16px;"></i>
+                        <span>Verify Credential</span>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<div th:replace="~{fragments/scripts :: scripts}"></div>
+</body>
+</html>
